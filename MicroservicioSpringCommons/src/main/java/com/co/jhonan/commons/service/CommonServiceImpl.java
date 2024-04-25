@@ -1,40 +1,36 @@
-package com.co.jhonan.usuarios.service;
-
+package com.co.jhonan.commons.service;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.co.jhonan.usuarios.entity.Alumno;
-import com.co.jhonan.usuarios.repository.AlumnoRepository;
 
-@Service
-public class AlumnoServiceImpl implements AlumnoService {
+public class CommonServiceImpl <E, R extends CrudRepository<E, Long>> implements CommonService<E> {
 
 	@Autowired
-	AlumnoRepository dao;
+	private R dao;
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Iterable<Alumno> findAll() {
+	public Iterable<E> findAll() {
 		// TODO Auto-generated method stub
 		return dao.findAll();
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<Alumno> findById(Long id) {
+	public Optional<E> findById(Long id) {
 		// TODO Auto-generated method stub
 		return dao.findById(id);
 	}
 
 	@Override
 	@Transactional
-	public Alumno save(Alumno alumno) {
+	public E save(E entity) {
 		// TODO Auto-generated method stub
-		return dao.save(alumno);
+		return dao.save(entity);
 	}
 
 	@Override
@@ -43,5 +39,5 @@ public class AlumnoServiceImpl implements AlumnoService {
 		// TODO Auto-generated method stub
 		dao.deleteById(id);
 	}
-
+	
 }
