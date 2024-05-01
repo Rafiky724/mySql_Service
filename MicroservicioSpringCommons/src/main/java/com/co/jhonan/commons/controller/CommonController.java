@@ -1,4 +1,4 @@
-package com.co.jhonan.usuarios.controller;
+package com.co.jhonan.commons.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,19 +12,17 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.co.jhonan.commons.controller.CommonController;
-import com.co.jhonan.usuarios.entity.Alumno;
-import com.co.jhonan.usuarios.service.AlumnoService;
+import com.co.jhonan.commons.service.CommonService;
 
-@RestController
-public class AlumnoController extends CommonController<Alumno, AlumnoService>{
+public class CommonController <E, S extends CommonService<E>> {
+
+	@Autowired
+	protected S service;
 	
 	@Value("${config.balanceador.test}")
-	private String balanceadorTest;
+	protected String balanceadorTest;
 	
 	@GetMapping("/balanceador-test")
 	public ResponseEntity<?> balanceadorTest(){
@@ -35,7 +33,7 @@ public class AlumnoController extends CommonController<Alumno, AlumnoService>{
 		return ResponseEntity.ok().body(response);
 	}
 	
-	/*@GetMapping
+	@GetMapping("/listar")
 	public ResponseEntity<?> listarAlumno(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
@@ -43,7 +41,7 @@ public class AlumnoController extends CommonController<Alumno, AlumnoService>{
 	@GetMapping("/alumno/{id}")
 	public ResponseEntity<?> ver(@PathVariable Long id){
 		
-		Optional<Alumno> ob = service.findById(id);
+		Optional<E> ob = service.findById(id);
 		
 		if(ob.isEmpty()) {
 			return ResponseEntity.noContent().build();
@@ -53,34 +51,16 @@ public class AlumnoController extends CommonController<Alumno, AlumnoService>{
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> crear(@RequestBody Alumno alumno){
-		Alumno alumnoDb = service.save(alumno);
-		return ResponseEntity.status(HttpStatus.CREATED).body(alumnoDb);
-	}*/
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<?> editar(@RequestBody Alumno alumno, @PathVariable Long id){
-		Optional<Alumno> ob = service.findById(id);
-		
-		if(ob.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		}
-		
-		Alumno alumnoBd = ob.get();
-		alumnoBd.setNombre(alumno.getNombre());
-		alumnoBd.setApellido(alumno.getApellido());
-		alumnoBd.setEmail(alumno.getEmail());
-		alumnoBd.setNombre(alumno.getNombre());
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(service);
-		
+	public ResponseEntity<?> crear(@RequestBody E entity){
+		E entityDb = service.save(entity);
+		return ResponseEntity.status(HttpStatus.CREATED).body(entityDb);
 	}
 	
-	 /*@DeleteMapping("/{id}")
+	 @DeleteMapping("/{id}")
 	 private ResponseEntity<?> eliminar(@PathVariable Long id){
 		
 		 service.deleteById(id);
 		 return ResponseEntity.noContent().build();
-	}*/
+	}
 	
 }
