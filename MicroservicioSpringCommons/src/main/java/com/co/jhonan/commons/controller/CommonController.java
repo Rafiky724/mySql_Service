@@ -34,11 +34,11 @@ public class CommonController <E, S extends CommonService<E>> {
 	}
 	
 	@GetMapping("/listar")
-	public ResponseEntity<?> listarAlumno(){
+	public ResponseEntity<?> listar(){
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
-	@GetMapping("/alumno/{id}")
+	@GetMapping("/lista/{id}")
 	public ResponseEntity<?> ver(@PathVariable Long id){
 		
 		Optional<E> ob = service.findById(id);

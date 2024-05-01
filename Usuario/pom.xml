@@ -63,6 +63,12 @@
 			<artifactId>MicroservicioSpringCommons</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.co.jhonan.common.usuario</groupId>
+			<artifactId>MicroservicioCommonsService</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.co.jhonan.common.usuario.models.entity.Alumno;
 import com.co.jhonan.commons.controller.CommonController;
-import com.co.jhonan.usuarios.entity.Alumno;
 import com.co.jhonan.usuarios.service.AlumnoService;
 
 @RestController
