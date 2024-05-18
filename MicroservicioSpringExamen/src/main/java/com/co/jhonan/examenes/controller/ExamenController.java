@@ -17,7 +17,7 @@ import com.co.jhonan.examenes.services.ExamenService;
 public class ExamenController extends CommonController<Examen, ExamenService>{
 
 	@PutMapping("/examenes/{id}")
-    public ResponseEntity<?> update(@RequestBody Examen examen, @PathVariable Long id) {
+	public ResponseEntity<?> update(@RequestBody Examen examen, @PathVariable Long id) {
         Optional<Examen> optionalExamen = service.findById(id);
 
         if (!optionalExamen.isPresent()) {
@@ -25,7 +25,9 @@ public class ExamenController extends CommonController<Examen, ExamenService>{
         }
 
         Examen examenDb = optionalExamen.get();
-        examenDb.setNombre(examen.getNombre());
+        examenDb.setNombre(examen.getNombre()); 
+
+        examenDb.setPreguntas(examen.getPreguntas());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(examenDb));
     }
